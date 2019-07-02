@@ -11,15 +11,14 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
 
-    protected abstract val layoutResource: Int
     protected lateinit var viewDataBinding: VB
+    protected abstract val layoutResource: Int
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        return (DataBindingUtil.inflate(inflater, layoutResource, container, false) as VB).also {
-            viewDataBinding = it
-        }.root
+        viewDataBinding = DataBindingUtil.inflate(inflater, layoutResource, container, false) as VB
+        return viewDataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

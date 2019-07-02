@@ -1,16 +1,19 @@
 package com.example.demoproject3.coroutine
 
-import com.example.demoproject3.data.api.response.ApiResponse
 import kotlinx.coroutines.*
 import kotlin.coroutines.resume
 
-suspend fun <T : Any> Deferred<ApiResponse<T>>.awaitResult(): CallResult<T> =
+suspend fun <T : Any> Deferred<T>.awaitResult(): CallResult<T> =
     suspendCancellableCoroutine { continuation ->
 
         GlobalScope.launch {
             try {
                 val response = await()
-                continuation.resume(CallResult.Success(response.message))
+                if (response.isNotAvailable()) {
+                    throw DataNotAvailableException()
+                } else {
+                    continuation.resume(CallResult.Success(response))
+                }
             } catch (e: Throwable) {
                 continuation.resume(CallResult.Error(e))
             }
@@ -29,3 +32,6 @@ private fun Deferred<*>.registerOnCompletion(continuation: CancellableContinuati
             }
     }
 }
+
+private fun <RESPONSE> RESPONSE.isNotAvailable(): Boolean = this == null || (this is List<*> && isEmpty())
+

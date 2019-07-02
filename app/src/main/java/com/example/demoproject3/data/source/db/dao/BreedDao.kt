@@ -7,6 +7,6 @@ import com.example.demoproject3.data.source.db.entity.Breed
 @Dao
 interface BreedDao {
 
-    @Query("SELECT * FROM tbl_breeds ORDER BY id ASC")
-    suspend fun getAllBreeds(): List<Breed>
+    @Query("SELECT * FROM tbl_create_breeds")
+    suspend fun getBreeds(): List<Breed>?
 }

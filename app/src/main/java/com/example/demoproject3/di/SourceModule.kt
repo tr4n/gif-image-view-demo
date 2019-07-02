@@ -15,7 +15,10 @@ val sourceModule = module {
     }
 
     single(named(KoinNames.BREEDS_REMOTE_DATA_SOURCE)) {
-        BreedsRemoteDataSource(dogCeoApi = get(named(KoinNames.DOG_CEO_API)))
+        BreedsRemoteDataSource(
+            dogCeoApi = get(named(KoinNames.DOG_CEO_API)),
+            theDogApi = get(named(KoinNames.THE_DOG_API))
+        )
     }
 
     single(named(KoinNames.BREEDS_LOCAL_REPOSITORY)) {

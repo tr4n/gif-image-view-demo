@@ -9,6 +9,6 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Dispatchers.Main
 
-    abstract fun onCreate()
+    abstract fun create()
 }
 

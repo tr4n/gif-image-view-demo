@@ -18,6 +18,7 @@ class SearchViewModel(
 ) : BaseViewModel() {
 
     val breedAdapter = BreedAdapter()
+    val searchBoxVisible: Boolean = false
 
     private val localBreeds = MutableLiveData<List<Breed>>().apply {
         value = emptyList()
@@ -28,16 +29,12 @@ class SearchViewModel(
         })
     }
 
-    override fun onCreate() {
+    override fun create() {
         getBreeds()
     }
 
     private fun getBreeds() = launch {
-        localBreeds.value = repository.getLocalBreeds().let { result ->
-
-            if (result is CallResult.Success) result.data.also {
-                Log.d(TAG, "$TAG result = $it " )
-            } else emptyList()
-        }
+        val result = repository.getLocalBreeds()
+        localBreeds.value = if (result is CallResult.Success) result.data else emptyList()
     }
 }

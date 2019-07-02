@@ -8,7 +8,7 @@ import com.example.demoproject3.data.source.db.entity.Breed
 import com.huma.room_for_asset.RoomAsset
 
 private const val DATABASE_VERSION = 2
-private const val DATABASE_NAME = "dog_breeds.db"
+private const val DATABASE_NAME = "breeds.db"
 
 @Database(entities = [Breed::class], version = DATABASE_VERSION, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
